@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'sinatra'
-gem 'thin'
+gem 'thin', "1.5.0"
 gem 'omniauth'
 gem 'rake'
 gem 'activerecord'
