@@ -45,7 +45,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   omniauth
-  pg
+  pg (= 0.14.1)
   rake
   sinatra
   sqlite3
