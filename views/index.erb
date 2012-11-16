@@ -1,0 +1,9 @@
+<% if logged_in? %>
+	<% @messages.each do |m| %>
+		<p class="message"><span class="user">(<%= m.user.name %>)</span> <%= m.body %></p>
+	<% end %>
+	<form action="/messages" method="post">
+		<input type="text" name="body" value="" />
+		<input type="Submit" value="Post" />
+	</form>
+<% end %>

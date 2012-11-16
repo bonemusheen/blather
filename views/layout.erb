@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  	<title>Blather</title>
+  	<style type="text/css">
+  	  .main {
+  	  	margin-left: auto;
+  	  	margin-right: auto;
+  	  	padding: 2em;
+  	  	border: solid black 2px;
+  	  	background-color: lightgray;
+  	  }
+      #welcome { 
+        color:blue;font-weight:italic;
+      }
+      p.message {
+        border: solid black 1px;
+        background: white;
+        margin: 0;
+        width: 50em;
+      }
+      p.message span.user {
+        color: orange;
+      }
+  	</style>
+  </head>
+  <body>
+  	<div class="main">
+      <h1> Blather! </h1>
+      <div id="welcome">
+        <% if logged_in? %>
+          Welcome <%= user.name %>!
+        <% end %>
+      <ul>
+        <li><a href="/">Main</a></li>
+        <% if logged_in? %>
+          <li><a href="/logout">Logout</a></li>
+        <% else %>
+          <li><a href="/auth/developer">Login</a></li>
+        <% end %>
+      </ul>
+  		<%= yield %>
+    </div>
+  </body>
+</html>
