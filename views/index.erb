@@ -1,9 +1,16 @@
 <% if logged_in? %>
-	<% @messages.each do |m| %>
-		<p class="message"><span class="user">(<%= m.user.name %>)</span> <%= m.body %></p>
-	<% end %>
-	<form action="/messages" method="post">
-		<input type="text" name="body" value="" />
-		<input type="Submit" value="Post" />
-	</form>
+	<div class="container-fluid">
+		<% @messages.each do |m| %>
+			<div class="row-fluid">
+				<div class="span1"><img src="<%= h m.user.image %>"></div>
+				<div class="span11"><%= h m.body %></div>
+			</div>
+		<% end %>
+	</div>
+	<div class="input-append">
+		<form action="/messages" method="post">
+			<input class="span4" id="postbox" type="text" name="body" value="" />
+			<input class="btn btn-inverse" type="Submit" value="Post!">
+		</form>
+	</div>
 <% end %>

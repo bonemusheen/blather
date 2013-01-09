@@ -3,6 +3,9 @@ source :rubygems
 gem 'sinatra'
 gem 'thin', "1.5.0"
 gem 'omniauth'
+gem 'omniauth-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 gem 'rake'
 gem 'activerecord'
 

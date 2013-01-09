@@ -1,13 +1,21 @@
 require_relative "config/environment"
 require "sinatra"
 require "omniauth"
+require "omniauth-facebook"
+require "omniauth-google-oauth2"
 
 set :port, ENV["PORT"] || 4567
 
 use Rack::Session::Cookie
-use OmniAuth::Strategies::Developer
+use OmniAuth::Builder do
+	provider :facebook, ENV['FACEBOOK_ACCT'], ENV['FACEBOOK_SECRET_BLATHER']
+	provider :google_oauth2, ENV['GOOGLE_ACCT'], ENV['GOOGLE_SECRET_BLATHER']
+end
 
 helpers do
+	include Rack::Utils
+  	alias_method :h, :escape_html
+	
 	def logged_in?
 		session["user_id"]
 	end
@@ -18,15 +26,18 @@ helpers do
 end
 
 get "/" do
-	@messages = Message.find :all if logged_in?
+	@messages = Message.find(:all, :limit => 10, :order => "created_at DESC").reverse if logged_in?
 	erb :index
 end
 
-post "/auth/developer/callback" do
-	@user = User.find_by_email params["email"]
-	@user ||= User.create! :email => params["email"], :name => params["name"]
-	session["user_id"] = @user.id
-	redirect "/"
+get "/auth/:provider/callback" do
+	auth = request.env["omniauth.auth"]
+  oauth_fields = %w(email nickname name first_name last_name gender link locale timezone username image provider verified)  
+  user = User.where(:uid => auth["uid"]).first_or_create(auth["info"].select do |k,v|
+    oauth_fields.include? k 
+  end)
+  session[:user_id] = user.id
+  redirect "/"
 end
 
 post "/messages" do

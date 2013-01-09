@@ -1,45 +1,49 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-  	<title>Blather</title>
-  	<style type="text/css">
-  	  .main {
-  	  	margin-left: auto;
-  	  	margin-right: auto;
-  	  	padding: 2em;
-  	  	border: solid black 2px;
-  	  	background-color: lightgray;
-  	  }
-      #welcome { 
-        color:blue;font-weight:italic;
-      }
-      p.message {
-        border: solid black 1px;
-        background: white;
-        margin: 0;
-        width: 50em;
-      }
-      p.message span.user {
-        color: orange;
-      }
-  	</style>
+  	<title>Blather!</title>
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
   <body>
-  	<div class="main">
+    <div class="page-header">
       <h1> Blather! </h1>
-      <div id="welcome">
-        <% if logged_in? %>
-          Welcome <%= user.name %>!
-        <% end %>
-      <ul>
-        <li><a href="/">Main</a></li>
-        <% if logged_in? %>
-          <li><a href="/logout">Logout</a></li>
-        <% else %>
-          <li><a href="/auth/developer">Login</a></li>
-        <% end %>
-      </ul>
-  		<%= yield %>
     </div>
+    <div id="welcome">
+      <% if logged_in? %>
+        Welcome <%= h user.name.split(/\s+/)[0] %>!
+      <% end %>
+    </div>
+    <p></p>
+    <div class="btn-group">
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-home icon-white"></i>
+        Options
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="/">Main</a></li>
+        <li><a href="/">My Profile</a></li>
+      </ul>
+    </div>
+    <div class="btn-group">
+      <% if logged_in? %>
+        <a href="/logout" class="btn btn-success"><i class="icon-off icon-white"></i> Logout</a>
+      <% else %>
+        <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>
+          Login
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href='/auth/facebook'>Login with Facebook</a></li>
+          <li><a href='/auth/google_oauth2'>Login with Google</a></li>
+        </ul>
+      <% end %>
+    </div>
+    <div>
+      <%= yield %>
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/blather.js"></script>
   </body>
 </html>
