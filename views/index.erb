@@ -1,11 +1,6 @@
 <% if logged_in? %>
-	<div class="container-fluid">
-		<% @messages.each do |m| %>
-			<div class="row-fluid">
-				<div class="span1"><img src="<%= h m.user.image %>"></div>
-				<div class="span11"><%= h m.body %></div>
-			</div>
-		<% end %>
+	<div class="container-fluid" id="messages">
+		
 	</div>
 	<div class="input-append">
 		<form action="/messages" method="post">

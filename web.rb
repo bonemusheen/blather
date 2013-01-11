@@ -26,8 +26,12 @@ helpers do
 end
 
 get "/" do
-	@messages = Message.find(:all, :limit => 10, :order => "created_at DESC").reverse if logged_in?
 	erb :index
+end
+
+get "/messages" do
+	@messages = Message.find(:all, :limit => 10, :order => "created_at DESC").reverse
+	erb :messages, :layout => false
 end
 
 get "/auth/:provider/callback" do
