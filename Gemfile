@@ -8,6 +8,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'rake'
 gem 'activerecord'
+gem 'rack-ssl'
 
 group :development, :test do
   gem 'sqlite3'

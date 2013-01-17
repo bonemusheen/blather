@@ -6,6 +6,11 @@ require "omniauth-google-oauth2"
 
 set :port, ENV["PORT"] || 4567
 
+configure :production do
+	require 'rack/ssl'
+	use Rack::SSL
+end
+
 use Rack::Session::Cookie
 use OmniAuth::Builder do
 	provider :facebook, ENV['FACEBOOK_ACCT'], ENV['FACEBOOK_SECRET_BLATHER']
