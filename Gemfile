@@ -9,6 +9,7 @@ gem 'omniauth-google-oauth2'
 gem 'rake'
 gem 'activerecord'
 gem 'rack-ssl'
+gem 'sinatra-contrib'
 
 group :development, :test do
   gem 'sqlite3'

@@ -3,6 +3,7 @@ require "sinatra"
 require "omniauth"
 require "omniauth-facebook"
 require "omniauth-google-oauth2"
+require "sinatra/streaming"
 
 set :port, ENV["PORT"] || 4567
 
@@ -30,6 +31,8 @@ helpers do
 	end
 end
 
+Longpoll = []
+
 get "/" do
 	erb :index
 end
@@ -37,6 +40,14 @@ end
 get "/messages" do
 	@messages = Message.find(:all, :limit => 10, :order => "created_at DESC").reverse
 	erb :messages, :layout => false
+end
+
+get "/messageslp" do
+	stream(:keep_open) do |out|
+		puts out
+		Longpoll << out
+		puts Longpoll
+	end
 end
 
 get "/auth/:provider/callback" do
