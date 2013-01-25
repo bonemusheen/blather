@@ -59,7 +59,8 @@ get "/auth/:provider/callback" do
 end
 
 post "/messages" do
-	user.messages.create! :body => params["body"]
+	puts params.inspect
+	user.messages.create! :body => (params["body"] || "null")
 	@messages = Message.find(:all, :limit => 10, :order => "created_at DESC").reverse
 	msg_out = erb :messages, :layout => false
 	Longpoll.each do |out| 

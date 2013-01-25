@@ -1,6 +1,6 @@
 <% @messages.each do |m| %>
 	<div class="row-fluid">
-	  <div class="span1"><img src="<%= h m.user.image %>"></div>
+	  <div class="span1"><img style="width: 50px; height: 50px" src="<%= h m.user.image %>"></div>
 	  <div class="span11"><%= h m.body %></div>
 	</div>
 <% end %>
