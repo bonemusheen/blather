@@ -1,7 +1,7 @@
 source :rubygems
 
-gem 'sinatra'
-gem 'thin', "1.5.0"
+gem 'sinatra', :github => "sinatra/sinatra"
+gem 'thin'
 gem 'omniauth'
 gem 'omniauth-oauth2'
 gem 'omniauth-facebook'
@@ -9,7 +9,6 @@ gem 'omniauth-google-oauth2'
 gem 'rake'
 gem 'activerecord'
 gem 'rack-ssl'
-gem 'sinatra-contrib'
 
 group :development, :test do
   gem 'sqlite3'

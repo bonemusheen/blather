@@ -3,7 +3,6 @@ require "sinatra"
 require "omniauth"
 require "omniauth-facebook"
 require "omniauth-google-oauth2"
-require "sinatra/streaming"
 
 set :port, ENV["PORT"] || 4567
 
@@ -42,11 +41,10 @@ get "/messages" do
 	erb :messages, :layout => false
 end
 
-get "/messageslp" do
-	stream(:keep_open) do |out|
-		puts out
+get "/messageslp", provides: 'text/event-stream' do
+	stream :keep_open do |out|
 		Longpoll << out
-		puts Longpoll
+		out.callback { Longpoll.delete(out) }
 	end
 end
 
@@ -62,6 +60,12 @@ end
 
 post "/messages" do
 	user.messages.create! :body => params["body"]
+	@messages = Message.find(:all, :limit => 10, :order => "created_at DESC").reverse
+	msg_out = erb :messages, :layout => false
+	Longpoll.each do |out| 
+		out << msg_out
+		out.close
+	end
 	redirect "/"
 end
 
